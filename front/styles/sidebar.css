@@ -1,0 +1,28 @@
+/* sidebar.css */
+.sidebar .nav-item {
+    padding: 10px !important; /* Add 20px padding to nav items */
+}
+
+.nav-link {
+    display: flex; /* Ensure icons and text are aligned */
+    align-items: center; /* Center items vertically */
+}
+
+.nav-link.active {
+    background-color: #f8f9fa; /* Highlight active link */
+}
+.admin .btn{
+    padding: 10px;
+}
+.sidebar-heading{
+text-align: center;
+background: #30b3e3;
+    line-height: 50px;
+}
+
+.admin .nav-link.active {
+    background-color: #95bfc161;
+}
+.custom-upload{
+    width: 150px;
+}

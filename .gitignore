@@ -1,0 +1,38 @@
+# Next.js
+front/node_modules/
+front/Dockerfile
+front/dockerignore
+front/docker-compose.yml
+front/.next
+
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+
+# PHP Composer
+composer.phar
+
+# Laravel
+back/vendor/
+back/node_modules/
+back/public/hot
+back/public/storage
+back/storage/*.key
+back/.env
+back/Homestead.yaml
+back/Homestead.json
+back/phpunit.xml
+
+# Temporary files
+*.tmp
+*.temp
+*.pid
+
+# Ignore generated directories by Next.js
+.next/

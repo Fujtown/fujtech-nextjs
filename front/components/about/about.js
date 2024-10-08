@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link'
-import Project from '../../api/project'
+import Project from '../../api/project_old'
 import about1 from '/public/images/about/team.jpg'
 import aIcon1 from '/public/images/avatar/avatar_1.jpeg'
 import aIcon2 from '/public/images/avatar/avatar_2.jpeg'

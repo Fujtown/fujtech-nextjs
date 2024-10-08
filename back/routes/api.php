@@ -20,3 +20,6 @@ Route::get('/counters', [APIController::class, 'getCounters']);
 Route::get('/team', [APIController::class, 'getTeam']);
 // New route for fetching a single blog by slug
 Route::get('/blogs/{slug}', [APIController::class, 'getBlogBySlug']); // Add this line
+
+// Define a route for fetching projects
+Route::get('/projects', [APIController::class, 'getProjects']);

@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Counter;
 use App\Models\FAQ;
 use App\Models\Partner;
+use App\Models\Project;
 use App\Models\Services;
 use App\Models\Team;
 use Illuminate\Http\Request;
@@ -208,6 +209,40 @@ class APIController extends Controller
         'data' => $teamsWithFullImageUrl,
         'version' => $version,
     ]);
+
+    }
+
+    public function getProjects()
+    {
+         // Fetch partners from the database
+         $projects = Project::with(['service' => function($query) {
+            $query->select('id', 'title as category'); // Select the id and rename title to category
+        }])->get(); // Eager load the service relationship
+
+         // Get the base URL
+         $baseUrl = url('/'); // This will give you the base URL of your application
+
+       
+           // Map through projects to include the full image URLs
+           $projectsWithFullImageUrl = $projects->map(function ($project) use ($baseUrl) {
+               $project->bImg = $baseUrl . '/storage/' . $project->cover_image; // Full image URL
+               $project->slug = Str::slug($project->title); // Create a slug from the project title
+               $project->category = $project->service->category ?? null; // Use the renamed field
+               $project->date = Carbon::parse($project->created_at)->format('M-d-Y'); // Format the created_at date
+
+               return $project; // Return the modified blog object
+           });
+
+      
+         // Get the latest updated_at timestamp to create a dynamic version
+   $latestUpdate = $projects->max('updated_at'); // Get the latest updated_at timestamp
+   $version = $latestUpdate ? strtotime($latestUpdate) : time(); // Convert to timestamp or use current time if no updates
+
+   // Return the services and version as a structured response
+   return response()->json([
+       'data' => $projectsWithFullImageUrl,
+       'version' => $version,
+   ]);
 
     }
     

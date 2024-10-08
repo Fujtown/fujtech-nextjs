@@ -3,6 +3,7 @@ import sImg2 from '/public/images/services/service_image_2.webp'
 import sImg3 from '/public/images/services/service_image_3.webp'
 import sImg4 from '/public/images/services/service_image_4.webp'
 import sImg5 from '/public/images/services/service_image_5.webp'
+import sImg6 from '/public/images/services/app-dev1.jpg'
 
 import icon1 from '/public/images/icons/icon_code.webp'
 import icon2 from '/public/images/icons/icon_programming_tree.webp'
@@ -73,11 +74,15 @@ const Services = [
     },
     {
         Id: '6',
-        sImg:icon1,
-        title: 'Custom Software Development',
-        slug: 'Custom Software Development',
-        features: ['Software architecture design', 'System integration services', 'Data migration services', 'Legacy app modernization']
+        sImg:sImg6,
+        title: 'Mobile App Design and Development',
+        slug: 'Mobile-App-Design-and-Development',
+        thumb1:'Android development',
+        thumb2:'iOS app development',
+        col:'col-lg-8',
+        features: ['Android development services', 'iOS app development services', 'Mobile application design services', 'Enterprise mobile app development']
     },
+   
     {
         Id: '7',
         sImg:icon2,
@@ -94,11 +99,12 @@ const Services = [
     },
     {
         Id: '9',
-        sImg:icon4,
-        title: 'Mobile App Design and Development',
-        slug: 'Mobile-App-Design-and-Development',
-        features: ['Android development services', 'iOS app development services', 'Mobile application design services', 'Enterprise mobile app development']
+        sImg:icon1,
+        title: 'Custom Software Development',
+        slug: 'Custom Software Development',
+        features: ['Software architecture design', 'System integration services', 'Data migration services', 'Legacy app modernization']
     },
+   
     {
         Id: '10',
         sImg:icon5,

@@ -1,26 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link'
-import icon1 from '/public/images/icons/icon_wifi.svg'
-import icon2 from '/public/images/icons/icon_dollar_2.svg'
-import icon3 from '/public/images/icons/icon_chart.svg'
-import icon4 from '/public/images/icons/icon_tag_2.svg'
-import icon5 from '/public/images/icons/icon_user_2.svg'
-import icon6 from '/public/images/icons/icon_users.svg'
-import icon7 from '/public/images/icons/icon_pen.svg'
-import icon8 from '/public/images/clients/client_logo_9.webp'
-import icon9 from '/public/images/clients/client_logo_10.webp'
-import icon10 from '/public/images/avatar/avatar_7.webp'
-import icon11 from '/public/images/icons/icon_quote.svg'
 import logo from '/public/images/site_logo/site_logo.png'
 import logo2 from '/public/images/site_logo/logo2.png'
-import cases from '/public/images/case/case_image_4.webp'
 import MobileMenu from '../MobileMenu/MobileMenu'
 import Image from 'next/image';
+import { fetchServices } from '../../api/service';
 
 const Header = (props) => {
 
 const [mobailActive, setMobailState] = useState(false);
-
+const [services, setServices] = useState([]);
 const ClickHandler = () => {
 window.scrollTo(10, 0);
 }
@@ -28,21 +17,45 @@ window.scrollTo(10, 0);
 const [isSticky, setSticky] = useState(false);
 
 useEffect(() => {
+const getServices = async () => {
+    const cachedData = localStorage.getItem('services');
+    let servicesData = cachedData ? JSON.parse(cachedData) : [];
+   // console.log(JSON.parse(cachedData))
+    try {
+        
+        if (servicesData) {
+           
+            // If services exist in local storage, parse and set them
+            setServices(servicesData);
+        } else {
+            const { data } = await fetchServices();
+            setServices(data); // Use cached data     
+        }
+      
+    } catch (err) {
+        //setError(err); // Handle any errors
+    } 
+};
+
+getServices();
+
 const handleScroll = () => {
-if (window.scrollY > 80) {
-setSticky(true);
-} else {
-setSticky(false);
-}
-};
+    if (window.scrollY > 80) {
+    setSticky(true);
+    } else {
+    setSticky(false);
+    }
+    };
 
-window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
-// Clean up
-return () => {
-window.removeEventListener('scroll', handleScroll);
-};
+    // Clean up
+    return () => {
+    window.removeEventListener('scroll', handleScroll);
+    };
+
 }, []);
+
 
 
 return (
@@ -81,115 +94,23 @@ return (
             <div className="megamenu_widget">
                 <h3 className="megamenu_info_title">Services</h3>
                 <ul className="icon_list unordered_list_block">
-                    <li>
-                        <Link onClick={ClickHandler} href="/service">
-                            <span className="icon_list_text">
-                                IT Management Services
-                            </span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link onClick={ClickHandler} href="/service-single/Data-Tracking-and-Security">
-                            <span className="icon_list_text">
-                                Data Tracking Security
-                            </span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link onClick={ClickHandler} href="/service">
-                            <span className="icon_list_text">
-                                Website Development
-                            </span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link onClick={ClickHandler} href="/service">
-                            <span className="icon_list_text">
-                                CRM Solutions and Design
-                            </span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link onClick={ClickHandler} href="/service">
-                            <span className="icon_list_text">
-                                UI/UX Design Services
-                            </span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link onClick={ClickHandler} href="/service">
-                            <span className="icon_list_text">
-                                Technology Solution
-                            </span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link onClick={ClickHandler} href="/service">
-                            <span className="icon_list_text">
-                                Software Development
-                            </span>
-                        </Link>
-                    </li>
+                  {services.length > 0 ? (
+            services.map((service,index) => (
+                <li key={index}> {/* Use service.id for a unique key */}
+                    <Link onClick={ClickHandler} href={`/service`}> {/* Dynamic route for each service */}
+                        <span className="icon_list_text">
+                            {service.title}
+                        </span>
+                    </Link>
+                </li>
+            ))
+        ) : (
+            <li>No services available.</li>
+        )}
                 </ul>
             </div>
         </div>
-                    <div className="col-lg-6">
-                        <div className="megamenu_widget">
-                            <h3 className="megamenu_info_title">Our Fields</h3>
-                            <ul className="icon_list unordered_list_block">
-                                <li>
-                                    <Link onClick={ClickHandler} href="/service">
-                                        <span className="icon_list_text">
-                                            Healthcare
-                                        </span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link onClick={ClickHandler} href="/service">
-                                        <span className="icon_list_text">
-                                            Banks
-                                        </span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link onClick={ClickHandler} href="/service">
-                                        <span className="icon_list_text">
-                                            Logistics
-                                        </span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link onClick={ClickHandler} href="/service">
-                                        <span className="icon_list_text">
-                                            Supermarkets
-                                        </span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link onClick={ClickHandler} href="/service">
-                                        <span className="icon_list_text">
-                                            Industries
-                                        </span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link onClick={ClickHandler} href="/service">
-                                        <span className="icon_list_text">
-                                            Hotels
-                                        </span>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link onClick={ClickHandler} href="/service">
-                                        <span className="icon_list_text">
-                                            Fintech
-                                        </span>
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    
+                 
                                         </div>
                                         
                                     </div>

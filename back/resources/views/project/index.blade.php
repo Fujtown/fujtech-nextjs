@@ -7,14 +7,14 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-        @include('admin.common.menu')
+        @include('common.menu')
         
         <!-- / Menu -->
 
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->
-          @include('admin.common.navbar')
+          @include('common.navbar')
 
           <!-- / Navbar -->
 
@@ -43,7 +43,6 @@
                       <tr>
                         <th>Sr No</th>
                         <th>Title</th>
-                        <th>Description</th>
                         <th>Service</th>
                         <th>Cover Image</th>
                         <th>Images</th>
@@ -56,7 +55,6 @@
                       <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $project->title }}</strong></td>
-                        <td>{!! Str::limit($project->description, 100) !!}</td>
                         <td>{{ $project->service->title }}</td>
                         <td>
                           <img src="{{ asset('storage/' . $project->cover_image) }}" alt="{{ $project->title }}" style="width: 100px; height: 100px;">

@@ -13,17 +13,22 @@ import {
 } from 'reactstrap';
 import TechnologySection from '../TechnologySection/TechnologySection';
 import Testimonial from '../Testimonial/Testimonial';
+import Accordion2 from '../Accordion/Accordion';
 import Image from 'next/image';
 
 const FaqSection = (props) => {
 
     const [open, setOpen] = useState('1');
-    const toggle = (id) => {
-        if (open === id) {
-            setOpen();
-        } else {
-            setOpen(id);
-        }
+   
+
+     // Function to toggle the accordion based on the selected process step
+     const toggle = (id) => {
+        setOpen(open === id ? '' : id); // Open/close the selected accordion item
+    };
+
+    // Callback to update the open accordion based on step from Accordion2
+    const handleStepChange = (stepId) => {
+        setOpen(stepId);
     };
 
     return (
@@ -92,33 +97,23 @@ const FaqSection = (props) => {
                             </AccordionItem>
                         </Accordion>
                     </div>
-                    <div className="col-lg-5">
-                        <Accordion open={open} toggle={toggle} className="accordion" id="service_process_faq">
-                            <ul className="content_layer_group unordered_list_block text-center">
-                                <li><AccordionHeader targetId="1"><span>Discovery Phase</span></AccordionHeader></li>
-                                <li><AccordionHeader targetId="2"><span>Design and Development</span></AccordionHeader></li>
-                                <li><AccordionHeader targetId="3"><span>Maintenance</span></AccordionHeader></li>
-                                <li><AccordionHeader targetId="4"><span>Deployment</span></AccordionHeader></li>
-                                <li><AccordionHeader targetId="5"><span>Testing and QA</span></AccordionHeader></li>
-                            </ul>
-                        </Accordion>
-                    </div>
+                    <Accordion2 onStepChange={handleStepChange}/>
                 </div>
                 <TechnologySection/>
                 <Testimonial/>
             </div>
 
             <div className="decoration_item shape_image_1">
-                <Image src={shape1} alt="Techco Shape" />
+                <Image src={shape1} alt="Fujtech Shape" />
             </div>
             <div className="decoration_item shape_image_2">
-                <Image src={shape2} alt="Techco Shape" />
+                <Image src={shape2} alt="Fujtech Shape" />
             </div>
             <div className="decoration_item shape_image_3">
-                <Image src={shape3} alt="Techco Shape" />
+                <Image src={shape3} alt="Fujtech Shape" />
             </div>
             <div className="decoration_item shape_image_4">
-                <Image src={shape4} alt="Techco Shape" />
+                <Image src={shape4} alt="Fujtech Shape" />
             </div>
         </section>
     )

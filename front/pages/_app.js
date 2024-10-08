@@ -17,19 +17,19 @@ import Head from "next/head";
 function MyApp({ Component, pageProps }) {
     // Check if the current route is an admin route
     // console.log(Component.displayName)
-    const isAdminRoute = Component.displayName === 'AddCategory' || Component.displayName === 'ListCategory' || Component.displayName === 'AddBlog' || Component.displayName === 'AllBlogs' || Component.displayName === 'AddService' || Component.displayName === 'AllServices' || Component.displayName === 'Dashboard'; // Add other admin components as needed
+    //const isAdminRoute = Component.displayName === 'AddCategory' || Component.displayName === 'ListCategory' || Component.displayName === 'AddBlog' || Component.displayName === 'AllBlogs' || Component.displayName === 'AddService' || Component.displayName === 'AllServices' || Component.displayName === 'Dashboard'; // Add other admin components as needed
     
   return (
-    <>
-      {isAdminRoute ? (
-        <AdminLayout>
-          <Component {...pageProps} />
-        </AdminLayout>
-      ) : (
-        <Component {...pageProps} />
-      )}
-    </>
-
+    // <>
+    //   {isAdminRoute ? (
+    //     <AdminLayout>
+    //       <Component {...pageProps} />
+    //     </AdminLayout>
+    //   ) : (
+    //     <Component {...pageProps} />
+    //   )}
+    // </>
+    <Component {...pageProps} />
   )
 }
 

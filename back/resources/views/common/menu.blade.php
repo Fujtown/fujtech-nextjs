@@ -219,6 +219,12 @@
                 <div data-i18n="Team">Team</div>
               </a>
             </li>
+            <li class="menu-item {{ request()->is('coffee/faq') ? 'active' : '' }}">
+                <a href="{{route('faq.index')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Team">FAQ</div>
+              </a>
+            </li>
 
           
           </ul>

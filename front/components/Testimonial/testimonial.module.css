@@ -1,0 +1,12 @@
+.award{
+text-align: center;
+}
+
+.awardImg{
+    height: 100px !important;
+    object-fit: contain;
+    margin-bottom: 35px;
+}
+.awardheading{
+    text-align: center;
+}

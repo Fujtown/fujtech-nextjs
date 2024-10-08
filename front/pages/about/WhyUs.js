@@ -46,7 +46,7 @@ const WhyUs = (props) => {
                 <div className="row align-items-center justify-content-lg-between">
                     <div className="col-lg-6">
                         <div className="image_wrap service-img">
-                            <Image src={wImg} alt="Techco - About"/>
+                            <Image src={wImg} alt="Fujtech - About"/>
                         </div>
                     </div>
                     <div className="col-lg-6">

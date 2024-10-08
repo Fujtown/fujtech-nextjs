@@ -7,14 +7,14 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-        @include('admin.common.menu')
+        @include('common.menu')
         
         <!-- / Menu -->
 
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->
-          @include('admin.common.navbar')
+          @include('common.navbar')
 
           <!-- / Navbar -->
 
@@ -85,6 +85,20 @@
                             />
                         </div>
                     </div>
+                    <div class="mb-3" id="points-container">
+
+                    <div class="input-group input-group-merge mb-2 mt-3">
+                                <span class="input-group-text">
+                                    <i class="bx bx-book"></i>
+                                </span>
+                                <input type="text" class="form-control" name="points[]" placeholder="Service Point" aria-label="Service Point" required="">
+                                <button type="button" class="btn btn-secondary" id="add-point">Add Point</button>
+                            </div>
+                       
+                            <button type="button" class="btn btn-danger remove-point" style="display:none;">Remove</button>
+                       
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-label" for="basic-icon-default-category">Service Description</label>
                         <div class="input-group input-group-merge">
@@ -117,5 +131,35 @@
             </div>
             <!-- / Content -->
 
+            @section('script')
+            <script>
+                        document.getElementById('add-point').addEventListener('click', function() {
+                            const container = document.getElementById('points-container');
+                            const newInputGroup = document.createElement('div');
+                            newInputGroup.className = 'input-group input-group-merge mb-2';
+                            newInputGroup.innerHTML = `
+                                <span class="input-group-text">
+                                    <i class="bx bx-book"></i>
+                                </span>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="points[]"
+                                    placeholder="Service Point"
+                                    aria-label="Service Point"
+                                    required
+                                />
+                                <button type="button" class="btn btn-danger remove-point">Remove</button>
+                            `;
+                            container.appendChild(newInputGroup);
+                        });
+
+                        document.getElementById('points-container').addEventListener('click', function(e) {
+                            if (e.target.classList.contains('remove-point')) {
+                                e.target.parentElement.remove();
+                            }
+                        });
+                    </script>
+            @endsection
 @endsection
 

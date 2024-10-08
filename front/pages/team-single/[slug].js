@@ -92,7 +92,7 @@ const TeamSinglePage = (props) => {
 
                         <h3 className="details_item_info_title">Professional Skills</h3>
                         <p>
-                            Since joining Techco in 1993, Matilda has been instrumental in transforming the company from a collection of tech-savvy individuals collaborating with startups to a world-renowned leader in Digital Systems Engineering Services, catering to the innovation needs of Fortune 500 enterprises. During Matilda's tenure as President and CEO, Techco has witnessed remarkable expansion in both its scale and revenue streams. This growth has been achieved hand-in-hand with the cultivation of a vibrant company culture that champions employee engagement and fosters a spirit of innovation at every level.
+                            Since joining Fujtech in 1993, Matilda has been instrumental in transforming the company from a collection of tech-savvy individuals collaborating with startups to a world-renowned leader in Digital Systems Engineering Services, catering to the innovation needs of Fortune 500 enterprises. During Matilda's tenure as President and CEO, Fujtech has witnessed remarkable expansion in both its scale and revenue streams. This growth has been achieved hand-in-hand with the cultivation of a vibrant company culture that champions employee engagement and fosters a spirit of innovation at every level.
                         </p>
 
                         <div className="row mb-5">

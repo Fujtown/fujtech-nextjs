@@ -12,5 +12,6 @@ class Services extends Model
         'title',
         'icon',
         'description',
+        'points',
     ];
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\HomeController;
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/about', [AboutController::class, 'index']);
@@ -38,7 +39,7 @@ Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.
 // All admin routes protected by custom middleware
 Route::middleware(['admin'])->prefix('coffee')->group(function () {
     Route::get('/', function () {
-        return view('admin.home');
+        return view('home');
     })->name('admin.home');
 
     // Blog routes
@@ -122,6 +123,18 @@ Route::middleware(['admin'])->prefix('coffee')->group(function () {
     Route::put('/update-team/{id}', [TeamController::class, 'update'])->name('update-team');
     Route::delete('/delete-team/{id}', [TeamController::class, 'destroy'])->name('delete-team');
     Route::resource('team', TeamController::class)->except(['index', 'store', 'edit', 'update', 'destroy']);
+
+    
+    // FAQ routes
+    Route::get('/faq', [FAQController::class, 'index'])->name('faq.index');
+    Route::get('/add-faq', [FAQController::class, 'create'])->name('add-faq');
+    Route::post('/store-faq', [FAQController::class, 'store'])->name('store-faq');
+    Route::get('/edit-faq/{id}', [FAQController::class, 'edit'])->name('edit-faq');
+    Route::put('/update-faq/{id}', [FAQController::class, 'update'])->name('update-faq');
+    Route::delete('/delete-faq/{id}', [FAQController::class, 'destroy'])->name('delete-faq');
+    Route::resource('faq', FAQController::class)->except(['index', 'store', 'edit', 'update', 'destroy']);
+
+
 
     // Logout route
     Route::get('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');

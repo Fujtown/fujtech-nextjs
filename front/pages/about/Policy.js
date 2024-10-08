@@ -7,7 +7,7 @@ import Image from 'next/image';
 const Policy = [
     {
         title: 'Our History',
-        subTitle: 'Since 1997 we have been a visionary and a reliable software engineering partner for world-class brands. abbreviated as co.',
+        subTitle: 'Since 2015 we have been a visionary and a reliable software engineering partner for world-class brands. abbreviated as co.',
         icon: sIcon1,
     },
     {

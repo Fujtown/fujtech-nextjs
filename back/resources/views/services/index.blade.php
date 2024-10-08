@@ -7,14 +7,14 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-        @include('admin.common.menu')
+        @include('common.menu')
         
         <!-- / Menu -->
 
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->
-          @include('admin.common.navbar')
+          @include('common.navbar')
 
           <!-- / Navbar -->
 
@@ -47,7 +47,7 @@
                       <tr>
                           <th>Title</th>
                           <th>Icon</th>
-                          <th>Description</th>
+                          <th>Points</th>
                           <th>Actions</th>
                       </tr>
                     </thead>
@@ -65,7 +65,16 @@
                           <img src="{{ asset('storage/' . $service->icon) }}" alt="{{ $service->title }}" style="width: 100px; height: auto;">
                         </td>
 
-                        <td>{!! Str::limit($service->description, 100) !!}</td>
+                        <td>
+                    @if($service->points)
+                    <button type="button" class="btn btn-info view-points" data-points="{{ json_encode(json_decode($service->points)) }}" data-bs-toggle="modal" data-bs-target="#pointsModal">
+
+                            View Points
+                        </button>
+                    @else
+                        <span class="badge bg-secondary">No points available</span>
+                    @endif
+                </td>
                        
                         <td>
                         <a href="#" class="text-primary edit-service" data-id="{{ $service->id }}" data-title="{{ $service->title }}" data-description="{{ $service->description }}" data-icon="{{ $service->icon }}">
@@ -101,6 +110,25 @@
               
               </div>
             </div>
+
+            <div class="modal fade" id="pointsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Service Points</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul id="pointsList" class="list-group">
+                    <!-- Points will be populated here -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
             <!-- / Content -->
             <div class="modal fade" id="editServiceModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -143,6 +171,36 @@
 @endsection
 
 @push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const viewPointsButtons = document.querySelectorAll('.view-points');
+
+        viewPointsButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const pointsJson = this.getAttribute('data-points');
+                const points = JSON.parse(pointsJson);
+                const pointsList = document.getElementById('pointsList');
+
+                // Clear previous points
+                pointsList.innerHTML = '';
+
+                // Create an ordered list
+                const orderedList = document.createElement('ol'); // Create an ordered list
+
+                // Populate the ordered list with points
+                points.forEach(point => {
+                    const listItem = document.createElement('li'); // Create list item
+                    listItem.className = 'list-group-item'; // Optional: Add class for styling
+                    listItem.textContent = point; // Set the text content
+                    orderedList.appendChild(listItem); // Append list item to ordered list
+                });
+
+                // Append the ordered list to the points list container
+                pointsList.appendChild(orderedList);
+            });
+        });
+    });
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 

@@ -54,8 +54,8 @@ return (
     <div className="col-xl-3 col-lg-2 col-5">
         <div className="site_logo">
             <Link onClick={ClickHandler} className="site_link" href="/">
-                <Image src={logo} alt="Site Logo – Techco – IT Solutions & Technology, Business Consulting, Software Company Site Template" />
-                <Image src={logo2} alt="Site Logo – Techco – IT Solutions & Technology, Business Consulting, Software Company Site Template" />
+                <Image src={logo} alt="Site Logo – Fujtech – IT Solutions & Technology, Business Consulting, Software Company Site Template" />
+                <Image src={logo2} alt="Site Logo – Fujtech – IT Solutions & Technology, Business Consulting, Software Company Site Template" />
             </Link>
         </div>
     </div>

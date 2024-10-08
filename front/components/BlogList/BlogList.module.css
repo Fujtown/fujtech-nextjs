@@ -1,0 +1,111 @@
+/* styles.css or BlogList.module.css */
+.pagination_nav li a {
+    color: #2b9ed4; /* Default link color */
+    padding: 10px 15px; /* Add some padding */
+    text-decoration: none; /* Remove underline */
+}
+
+.pagination_nav li a.active {
+    background-color: #2b9ed4; /* Active background color */
+    color: white; /* Active text color */
+    border-radius: 5px; /* Optional: rounded corners */
+}
+
+/* front/components/BlogList/BlogList.module.css */
+.blogCard {
+    background-color: #fff; /* Card background color */
+    border: 1px solid #ddd; /* Border color */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Prevent overflow */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-bottom: 20px; /* Space between cards */
+    transition: transform 0.2s; /* Smooth hover effect */
+}
+
+.blogCard:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+}
+
+.blogImage {
+    position: relative; /* Required for layout="fill" */
+    height: 200px; /* Fixed height for the image */
+}
+
+.imageWrap {
+    display: block; /* Make the link block-level */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+}
+
+.blogContent {
+    padding: 15px; /* Padding inside the card */
+}
+
+.blogTitle {
+    color: #020842 !important;
+    font-size: 1.25rem; /* Title size */
+    margin: 0 0 10px; /* Space below the title */
+}
+
+.blogDate {
+    font-size: 0.9rem; /* Smaller font for date */
+    color: #6c757d; /* Muted color */
+    margin: 5px 0; /* Space around the date */
+}
+
+.blogDescription {
+    margin: 10px 0; /* Space around the description */
+}
+
+.readMoreButton {
+    display: inline-block; /* Make it a block-level element */
+    margin-top: 10px; /* Space above the button */
+    padding: 10px 15px; /* Padding for the button */
+    background-color: #2b9ed4; /* Button background color */
+    color: white; /* Button text color */
+    border-radius: 5px; /* Rounded corners */
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.readMoreButton:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    color: #000;
+}
+
+
+
+.skeletonImage {
+    background-color: #e0e0e0; /* Light gray for the skeleton */
+    height: 200px; /* Fixed height for the image */
+    width: 100%; /* Full width */
+}
+
+.skeletonTitle {
+    background-color: #e0e0e0; /* Light gray for the title */
+    height: 20px; /* Height for the title */
+    width: 80%; /* Width of the title */
+    margin: 10px 0; /* Space around the title */
+}
+
+.skeletonDate {
+    background-color: #e0e0e0; /* Light gray for the date */
+    height: 15px; /* Height for the date */
+    width: 50%; /* Width of the date */
+    margin: 5px 0; /* Space around the date */
+}
+
+.skeletonDescription {
+    background-color: #e0e0e0; /* Light gray for the description */
+    height: 15px; /* Height for the description */
+    width: 100%; /* Full width */
+    margin: 5px 0; /* Space around the description */
+}
+
+.skeletonButton {
+    background-color: #e0e0e0; /* Light gray for the button */
+    height: 30px; /* Height for the button */
+    width: 100px; /* Width of the button */
+    margin-top: 10px; /* Space above the button */
+    border-radius: 5px; /* Rounded corners */
+}

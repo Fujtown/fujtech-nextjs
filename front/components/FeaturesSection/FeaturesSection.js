@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PartnerSection from '../PartnerSection';
 import CountUp from 'react-countup';
 import sIcon1 from '/public/images/icons/icon_head.webp'
@@ -7,38 +7,42 @@ import sIcon3 from '/public/images/icons/icon_like.webp'
 import sIcon4 from '/public/images/icons/icon_dart_board.webp'
 import fimg from '/public/images/about/about_image_1.webp'
 import Image from 'next/image';
-
-const FunFact = [
-    {
-        title: '25',
-        subTitle: 'Years of experience',
-        symbol: '+',
-        icon: sIcon1,
-    },
-    {
-        title: '280',
-        subTitle: 'Success Stories',
-        symbol: '+',
-        icon: sIcon2,
-    },
-    {
-        title: '5.6',
-        subTitle: 'Companies Trust Us',
-        symbol: 'K+',
-        icon: sIcon3,
-    },
-    {
-        title: '100',
-        subTitle: 'Results Guaranteed',
-        symbol: '%',
-        icon: sIcon4,
-    },
-
-
-]
+import { fetchCounters } from '../../api/counters'; // Import the fetch function
 
 
 const FeaturesSection = (props) => {
+    const [counter, setCounter] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const getCounter = async () => {
+            const cachedData = localStorage.getItem('counter');
+            const cachedVersion = localStorage.getItem('counterVersion');
+            let counterData = cachedData ? JSON.parse(cachedData) : [];
+            let currentVersion = cachedVersion ? parseInt(cachedVersion) : 0;
+
+            try {
+                const { data, version } = await fetchCounters();
+                if (version > currentVersion) {
+                    setCounter(data[0]); // Update state with new data
+                    localStorage.setItem('counter', JSON.stringify(data[0])); // Update local storage
+                    localStorage.setItem('counterVersion', version); // Update version in local storage
+                } else {
+                    setCounter(counterData); // Use cached data
+                }
+            } catch (err) {
+                setError(err); // Handle any errors
+            } finally {
+                setLoading(false); // Set loading to false
+            }
+        };
+
+        getCounter();
+    }, []);
+     
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error fetching counters: {error.message}</div>;
 
     return (
         <section className="client_logo_section section_space" style={{ backgroundImage: `url(${'/images/shapes/bg_pattern_1.svg'})` }}>
@@ -56,29 +60,75 @@ const FeaturesSection = (props) => {
                 <div className="row funfact_wrapper">
                     <div className="col-lg-12">
                         <div className="row">
-                            {FunFact.map((funfact, fitem) => (
-                                <div className="col-md-3" key={fitem}>
+
+                                <div className="col-md-3">
                                     <div className="funfact_block">
                                         <div className="funfact_icon">
-                                            <Image src={funfact.icon} alt="Techco - SVG Icon Head" />
+                                            <Image src={sIcon1} alt="Fujtech - SVG Icon Head" />
                                         </div>
                                         <div className="funfact_content">
                                             <div className="counter_value">
-                                                <span className="odometer" data-count="25"><CountUp end={funfact.title} enableScrollSpy /></span>
-                                                <span>{funfact.symbol}</span>
+                                                <span className="odometer" data-count="{counter.years_experience}">
+                                                    <CountUp end={counter.years_experience} enableScrollSpy /></span>
+                                               
                                             </div>
-                                            <h3 className="funfact_title mb-0">{funfact.subTitle}</h3>
+                                            <h3 className="funfact_title mb-0">Years of experience</h3>
                                         </div>
                                     </div>
                                 </div>
-                            ))}
+                                <div className="col-md-3">
+                                    <div className="funfact_block">
+                                        <div className="funfact_icon">
+                                            <Image src={sIcon2} alt="Fujtech - SVG Icon Head" />
+                                        </div>
+                                        <div className="funfact_content">
+                                            <div className="counter_value">
+                                                <span className="odometer" data-count="{counter.projects_done}">
+                                                    <CountUp end={counter.projects_done} enableScrollSpy /></span>
+                                                    <span>+</span>     
+                                               
+                                            </div>
+                                            <h3 className="funfact_title mb-0">Projects Done</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="funfact_block">
+                                        <div className="funfact_icon">
+                                            <Image src={sIcon3} alt="Fujtech - SVG Icon Head" />
+                                        </div>
+                                        <div className="funfact_content">
+                                            <div className="counter_value">
+                                                <span className="odometer" data-count="{counter.happy_clients}">
+                                                    <CountUp end={counter.happy_clients} enableScrollSpy /></span>
+                                                    <span>+</span>     
+                                            </div>
+                                            <h3 className="funfact_title mb-0">Happy Clients</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="funfact_block">
+                                        <div className="funfact_icon">
+                                            <Image src={sIcon4} alt="Fujtech - SVG Icon Head" />
+                                        </div>
+                                        <div className="funfact_content">
+                                            <div className="counter_value">
+                                                <span className="odometer" data-count="{counter.expert_members}">
+                                                    <CountUp end={counter.expert_members} enableScrollSpy /></span>
+                                                    <span>+</span>     
+                                            </div>
+                                            <h3 className="funfact_title mb-0">Expert Members</h3>
+                                        </div>
+                                    </div>
+                                </div>
 
                         </div>
                     </div>
                     {/* <div className="col-lg-4">
                         <div className="our_world_employees">
                             <div className="image_wrap">
-                                <Image src={fimg} alt="Techco - Employees Guoup" />
+                                <Image src={fimg} alt="Fujtech - Employees Guoup" />
                             </div>
                             <div className="content_wrap">
                                 <h3 className="title_text mb-0">

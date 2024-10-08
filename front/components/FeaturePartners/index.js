@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -10,33 +11,7 @@ import pimg5 from '/public/images/clients/client_logo_5.webp'
 import pimg6 from '/public/images/clients/client_logo_6.webp'
 import pimg7 from '/public/images/clients/client_logo_7.webp'
 import Image from "next/image";
-
-const partners = [
-    {
-        pImg: pimg1,
-    },
-    {
-        pImg: pimg2,
-    },
-    {
-        pImg: pimg3,
-    },
-    {
-        pImg: pimg4,
-    },
-    {
-        pImg: pimg5,
-    },
-    {
-        pImg: pimg6,
-    },
-    {
-        pImg: pimg7,
-    },
-    {
-        pImg: pimg2,
-    },
-]
+import { fetchPartners } from '../../api/partners'; // Import the fetch function
 
 var settings = {
     dots: false,
@@ -98,6 +73,40 @@ var settings = {
 
 
 const FeaturePartners = (props) => {
+   
+    const [partners, setPartners] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const getPartners = async () => {
+            const cachedData = localStorage.getItem('partners');
+            const cachedVersion = localStorage.getItem('partnersVersion');
+            let partnersData = cachedData ? JSON.parse(cachedData) : [];
+            let currentVersion = cachedVersion ? parseInt(cachedVersion) : 0;
+
+            try {
+                const { data, version } = await fetchPartners();
+                if (version > currentVersion) {
+                    setPartners(data); // Update state with new data
+                    localStorage.setItem('partners', JSON.stringify(data)); // Update local storage
+                    localStorage.setItem('partnersVersion', version); // Update version in local storage
+                } else {
+                    setPartners(partnersData); // Use cached data
+                }
+            } catch (err) {
+                setError(err); // Handle any errors
+            } finally {
+                setLoading(false); // Set loading to false
+            }
+        };
+
+        getPartners();
+    }, []);
+     
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error fetching partners: {error.message}</div>;
+
 
     return (
         <div className="feature_partners_section">
@@ -107,11 +116,12 @@ const FeaturePartners = (props) => {
                 </div>
                 <div className="client_logo_carousel">
                     <Slider {...settings}>
-                        {partners.map((partner, pitem) => (
-                            <div className="client_logo_item" key={pitem}>
-                                <Image src={partner.pImg} alt="Techco - Client Logo" />
-                            </div>
-                        ))}
+                        {partners.map((partner, index) => (
+                    <div key={index} className="client_logo_item">
+                        <img src={partner.pImg} alt={`Partner ${index + 1}`} />
+                    </div>
+                ))}
+            
                     </Slider>
                 </div>
             </div>

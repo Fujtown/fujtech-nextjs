@@ -28,15 +28,15 @@ const ContactSection = (props) => {
                                         <span className="icon">
                                             <i className="fa-solid fa-phone-volume"></i>
                                         </span>
-                                        <span className="text">+880-1680-6361-89</span>
+                                        <span className="text">+971-503702600</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="mailto:Techco@gmail.com">
+                                    <a href="mailto:tech@fujtown.com">
                                         <span className="icon">
                                             <i className="fa-solid fa-envelope"></i>
                                         </span>
-                                        <span className="text">Techco@gmail.com</span>
+                                        <span className="text">tech@fujtown.com</span>
                                     </a>
                                 </li>
                                 <li>
@@ -44,7 +44,14 @@ const ContactSection = (props) => {
                                         <span className="icon">
                                             <i className="fa-solid fa-location-dot"></i>
                                         </span>
-                                        <span className="text">Sunshine Business Park</span>
+                                        <span className="text"><span><strong>U.A.E</strong></span><br/>
+                                        <span><strong>Dubai Branch</strong></span><br/>
+                                                    <span>Dubai Media City </span><br/>
+                                                    <span>----------------------------</span><br/>
+                                                <span><strong>Fujtek Head Office</strong></span><br/>
+                                                Office 808, Creative City Tower
+                                                Fujairah, UAE
+                                                P.O. Box: 9060</span>
                                     </a>
                                 </li>
                             </ul>
@@ -87,7 +94,7 @@ const ContactSection = (props) => {
                                     <h5 className="card-title">Our Location</h5>
                                     <div className="map_container">
                                         <iframe 
-                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509123!2d144.9537353153163!3d-37.81627997975157!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11f1b3%3A0x5045675218ceed30!2sYour%20Location!5e0!3m2!1sen!2sau!4v1616161616161!5m2!1sen!2sau" 
+                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3612.3879828143945!2d56.31846641448286!3d25.12257064089029!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ef4f9ca4549291f%3A0xb6108391aacad687!2sFujtek!5e0!3m2!1sen!2sae!4v1583050520972!5m2!1sen!2sae" 
                                             width="100%" 
                                             height="450" 
                                             style={{ border: 0 }} 
@@ -102,13 +109,13 @@ const ContactSection = (props) => {
                 </div>
             </div>
             <div className="decoration_item shape_image_1">
-                <Image src={shape1} alt="Techco Shape" />
+                <Image src={shape1} alt="Fujtech Shape" />
             </div>
             <div className="decoration_item shape_image_2">
-                <Image src={shape2} alt="Techco Shape" />
+                <Image src={shape2} alt="Fujtech Shape" />
             </div>
             <div className="decoration_item shape_image_3">
-                <Image src={shape3} alt="Techco Shape" />
+                <Image src={shape3} alt="Fujtech Shape" />
             </div>
         </section>
     )

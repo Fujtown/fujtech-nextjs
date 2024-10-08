@@ -1,28 +1,69 @@
-import { useRef, useEffect } from 'react';
-import { Navigation } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { useRef, useEffect,useState } from 'react';
 import Link from 'next/link'
-import blogs from '../../api/blogs'
-import bImg from '/public/images/blog/blog_post_image_4.webp'
-import arrow from '/public/images/shapes/shape_arrow_right.svg'
-import arrow2 from '/public/images/shapes/shape_arrow_left.svg'
+import {fetchBlogs} from '../../api/blogs'
 import icon1 from '/public/images/icons/icon_calendar.svg'
 import BlogSidebar from '../BlogSidebar';
 import Image from 'next/image';
+import styles from './BlogList.module.css'; // Import the CSS module
+import SkeletonCard from './SkeletonCard'; // Import the SkeletonCard component
 
 const BlogList = (props) => {
     const prevRef = useRef(null);
     const nextRef = useRef(null);
     const swiperRef = useRef(null);
-
+    const [blogs, setBlogs] = useState([]); // Initialize blogs as an empty array
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1); // Current page state
+    const [blogsPerPage] = useState(10); // Number of blogs to display per page
+   
     useEffect(() => {
+
         if (swiperRef.current && prevRef.current && nextRef.current) {
             swiperRef.current.params.navigation.prevEl = prevRef.current;
             swiperRef.current.params.navigation.nextEl = nextRef.current;
             swiperRef.current.navigation.init();
             swiperRef.current.navigation.update();
         }
+
+        const getBlogs = async () => {
+            const cachedData = localStorage.getItem('all_blog');
+            const cachedVersion = localStorage.getItem('all_blogVersion');
+            let counterData = cachedData ? JSON.parse(cachedData) : [];
+            let currentVersion = cachedVersion ? parseInt(cachedVersion) : 0;
+            try {
+                const { data,version } = await fetchBlogs();
+
+                if (version > currentVersion) {
+                    setBlogs(data); // Set the blogs state with the fetched data // Update state with new data
+                    localStorage.setItem('all_blog', JSON.stringify(data)); // Update local storage
+                    localStorage.setItem('all_blogVersion', version); // Update version in local storage
+                } else {
+                    setBlogs(counterData); // Use cached data
+                }
+              
+            } catch (err) {
+                setError(err); // Handle any errors
+            } finally {
+                setLoading(false); // Set loading to false
+            }
+        };
+
+        getBlogs();
     }, []);
+
+    if (loading) return <div>Loading...</div>; // Show loading state
+    if (error) return <div>Error fetching blogs: {error.message}</div>; // Show error message
+
+    const indexOfLastBlog = currentPage * blogsPerPage; // Last blog index
+    const indexOfFirstBlog = indexOfLastBlog - blogsPerPage; // First blog index
+    const currentBlogs = blogs.slice(indexOfFirstBlog, indexOfLastBlog); // Get current blogs
+    
+    const totalPages = Math.ceil(blogs.length / blogsPerPage); // Total number of pages
+
+        const handlePageChange = (pageNumber) => {
+            setCurrentPage(pageNumber); // Update current page
+        };
 
     const ClickHandler = () => {
         window.scrollTo(10, 0);
@@ -30,122 +71,53 @@ const BlogList = (props) => {
 
     return (
         <section className="blog_section section_space bg-light">
-            <div className="container">
-                <div className="blog_onecol_carousel overflow-hidden">
-                    <div className="swiper-wrapper">
-                        <Swiper
-                            modules={[Navigation]}
-                            spaceBetween={50}
-                            slidesPerView={1}
-                            loop={true}
-                            speed={1800}
-                            parallax={true}
-                            ref={swiperRef}
-                            onBeforeInit={(swiper) => {
-                                swiperRef.current = swiper;
-                            }}
-                        >
-                            {blogs.slice(0, 3).map((blog, Bitem) => (
-                                <SwiperSlide key={Bitem}>
-                                    <div className="blog_post_block content_over_layout">
-                                        <div className="blog_post_image">
-                                            <Link onClick={ClickHandler} href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`} className="image_wrap">
-                                                <Image src={bImg} alt="Blog Post" />
-                                            </Link>
-                                        </div>
-                                        <div className="blog_post_content">
-                                            <div className="post_meta_wrap">
-                                                <ul className="category_btns_group unordered_list">
-                                                    <li><Link onClick={ClickHandler} href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`}>Branding</Link></li>
-                                                    <li><Link onClick={ClickHandler} href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`}>UI/UX</Link></li>
-                                                </ul>
-                                                <ul className="post_meta unordered_list">
-                                                    <li>
-                                                        <Link onClick={ClickHandler} href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`}>
-                                                            <i className="fa-regular fa-calendar-days"></i> {blog.create_at}
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link onClick={ClickHandler} href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`}><i className="fa-regular fa-comment-lines"></i> 24</Link>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <h3 className="blog_post_title">
-                                                <Link onClick={ClickHandler} href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`}>
-                                                    {blog.title}
-                                                </Link>
-                                            </h3>
-                                            <p className="mb-0">
-                                                Embark on an enlightening journey through the realm of IT solutions as we delve into the latest technological advancements shaping the digital landscape.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-
-                    </div>
-                    <button ref={prevRef} className="b1cc-swiper-button-prev" type="button" style={{ backgroundImage: `url(${arrow})` }}>
-                        <i className="fa-solid fa-angles-left"></i>
-                    </button>
-                    <button ref={nextRef} className="b1cc-swiper-button-next" type="button" style={{ backgroundImage: `url(${arrow2})` }}>
-                        <i className="fa-solid fa-angles-right"></i>
-                    </button>
-                    <div className="b1cc-swiper-pagination p-0"></div>
-                </div>
-
-                <div className="section_space pb-0">
+            <div className="container-fluid">
+                <div className="section_space pt-5 pb-0">
                     <div className="row">
                         <div className="col-lg-8">
-                            {blogs.slice(3, 8).map((blog, Bitem) => (
-                                <div className="blog_post_block image_left_layout" key={Bitem}>
-                                    <div className="blog_post_image">
-                                        <Link onClick={ClickHandler} href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`} className="image_wrap">
-                                            <Image src={blog.screens} alt="Blog Post" />
-                                        </Link>
-                                    </div>
-                                    <div className="blog_post_content">
-                                        <div className="post_meta_wrap">
-                                            <ul className="category_btns_group unordered_list">
-                                                <li><Link onClick={ClickHandler} href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`}>{blog.thumb}</Link></li>
-                                            </ul>
-                                            <ul className="post_meta unordered_list">
-                                                <li>
-                                                    <Link onClick={ClickHandler} href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`}>
-                                                        <Image src={icon1} alt="Icon Calendar" /> {blog.create_at}
+                        <div className='row'>
+                                {currentBlogs.map((blog, Bitem) => (
+                                    <div className="col-lg-6" key={Bitem}>
+                                        <div className={styles.blogCard}>
+                                            <div className={styles.blogImage}>
+                                                <Link href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`} className={styles.imageWrap}>
+                                                    <Image  style={{ objectFit: 'cover'}} layout="fill" src={blog.bImg} alt="Blog Post" />
+                                                </Link>
+                                            </div>
+                                            <div className={styles.blogContent}>
+                                                <h3>
+                                                    <Link  className={styles.blogTitle} href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`}>
+                                                        {blog.title}
                                                     </Link>
-                                                </li>
-                                                <li>
-                                                    <Link onClick={ClickHandler} href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`}><i className="fa-regular fa-comment-lines"></i> 24</Link>
-                                                </li>
-                                            </ul>
+                                                </h3>
+                                                <p className={styles.blogDate}>
+                                                    <Image src={icon1} alt="Icon Calendar" /> {blog.date}
+                                                </p>
+                                                <p className={styles.blogDescription}>
+                                                    {blog.description}
+                                                </p>
+                                                <Link href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`} className={styles.readMoreButton}>
+                                                    Read More
+                                                </Link>
+                                            </div>
                                         </div>
-                                        <h3 className="blog_post_title">
-                                            <Link onClick={ClickHandler} href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`}>
-                                                {blog.title}
-                                            </Link>
-                                        </h3>
-                                        <p>
-                                            {blog.description}
-                                        </p>
-                                        <Link onClick={ClickHandler} href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`} className="btn btn-dark">
-                                            <span className="btn_label" data-text="Read More">Read More</span>
-                                            <span className="btn_icon">
-                                                <i className="fa-solid fa-arrow-up-right"></i>
-                                            </span>
-                                        </Link>
                                     </div>
-                                </div>
-                            ))}
-                            <div className="pagination_wrap pb-0">
-                                <ul className="pagination_nav unordered_list justify-content-center">
-                                    <li><Link onClick={ClickHandler} href={'/blog'}><i className="fa-solid fa-angles-left"></i></Link></li>
-                                    <li className="active"><Link onClick={ClickHandler} href={'/blog'}>1</Link></li>
-                                    <li><Link onClick={ClickHandler} href={'/blog'}>2</Link></li>
-                                    <li><Link onClick={ClickHandler} href={'/blog'}>3</Link></li>
-                                    <li><Link onClick={ClickHandler} href={'/blog'}>...</Link></li>
-                                    <li><Link onClick={ClickHandler} href={'/blog'}>10</Link></li>
-                                    <li><Link onClick={ClickHandler} href={'/blog'}><i className="fa-solid fa-angles-right"></i></Link></li>
+                                ))}
+                            </div>
+                            
+                             <div className="pagination_wrap pb-0">
+                                <ul className={`${styles.pagination_nav} unordered_list justify-content-center`}>
+                                    {Array.from({ length: totalPages }, (_, index) => (
+                                        <li key={index + 1}>
+                                            <Link
+                                                href="#"
+                                                onClick={() => handlePageChange(index + 1)}
+                                                className={currentPage === index + 1 ? styles.active : ''} // Apply active class
+                                            >
+                                                {index + 1}
+                                            </Link>
+                                        </li>
+                                    ))}
                                 </ul>
                             </div>
                         </div>

@@ -1,0 +1,74 @@
+.imageContainer {
+    position: relative; 
+    width: 100%;
+    /* height: 50vh;  */
+    overflow: hidden;
+    top: 10px;
+}
+
+.image {
+    object-fit: cover; 
+    max-width: 100%; /* Ensure the image is responsive */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* front/components/BlogDetails/BlogDetails.module.css */
+
+.customButton {
+    background-color: #30b3e3; /* Primary color */
+    color: white; /* Text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Padding for the button */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Transition effects */
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center items vertically */
+}
+
+.customButton i {
+    margin-right: 5px; /* Space between icon and text */
+}
+
+.customButton:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.customButton:active {
+    transform: scale(0.95); /* Slightly shrink on click */
+}
+.playerBtns{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* front/components/BlogDetails/BlogDetails.module.css */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure modal is on top */
+}
+
+.fullImage {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px; /* Optional: add some rounding */
+}
+
+/* front/components/BlogDetails/BlogDetails.module.css */
+
+.imageContainer {
+    overflow: hidden; /* Clear floats */
+}

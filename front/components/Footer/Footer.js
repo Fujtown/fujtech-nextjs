@@ -74,7 +74,7 @@ const Footer = (props) => {
   return (
     <footer className="site_footer footer_layout_2 section_decoration" style={{ backgroundImage: `url(${'/images/shapes/bg_pattern_3-2.webp'})` }}>
       <div className="decoration_item shape_image_1">
-        <Image src={icon1} alt="Techco Shape" />
+        <Image src={icon1} alt="Fujtech Shape" />
       </div>
       <div className="container">
         <div className="service_pill_carousel swiper">
@@ -306,7 +306,7 @@ const Footer = (props) => {
               <div className="footer_widget pe-lg-3">
                 <h2 className="footer_info_title">Newsletter</h2>
                 <p>
-                  Sign up to Techco weekly newsletter to get the latest updates.
+                  Sign up to Fujtech weekly newsletter to get the latest updates.
                 </p>
                 <form className="footer_newslatter_2" onSubmit={SubmitHandler}>
                   <label htmlFor="footer_mail_input">
@@ -348,7 +348,7 @@ const Footer = (props) => {
       <div className="footer_bottom" style={{ backgroundImage: `url(${'/images/shapes/shape_space_6.svg'})` }}>
         <div className="container d-md-flex align-items-md-center justify-content-md-between">
           <p className="copyright_text m-0">
-            Copyright © 2024 Techco, All rights reserved.
+            Copyright © 2024 Fujtech, All rights reserved.
           </p>
           <ul className="icon_list unordered_list">
             <li>

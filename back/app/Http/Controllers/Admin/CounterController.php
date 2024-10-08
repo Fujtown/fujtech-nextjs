@@ -14,7 +14,7 @@ class CounterController extends Controller
     public function index()
     {
         $counter = Counter::first();
-        return view('admin.extra.counter.index', compact('counter'));
+        return view('extra.counter.index', compact('counter'));
     }
 
     /**

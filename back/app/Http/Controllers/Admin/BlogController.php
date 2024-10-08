@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
-
+use Illuminate\Support\Str;
 class BlogController extends Controller
 {
     /**
@@ -18,7 +18,7 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::all();
-        return view('admin.blog.index', compact('blogs'));
+        return view('blog.index', compact('blogs'));
     }
 
     /**
@@ -27,7 +27,7 @@ class BlogController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.blog.create', compact('categories'));
+        return view('blog.create', compact('categories'));
     }
 
     /**
@@ -43,8 +43,14 @@ class BlogController extends Controller
             'content' => 'required|string',
             'tags' => 'nullable|string',
         ]);
+          // Generate slug from title
+         $slug = Str::slug($request->title);
+
     
-        $data = $request->only(['title', 'category_id', 'keywords', 'content', 'tags']);
+         $data = $request->only(['category_id', 'keywords', 'content', 'tags']);
+
+        $data['title'] = $request->title; // Include title in the data
+        $data['slug'] = $slug; // Add the generated slug to the data
     
         if ($request->hasFile('cover_image')) {
             $file = $request->file('cover_image');
@@ -82,7 +88,7 @@ class BlogController extends Controller
     {
         $blog = Blog::find($id);
         $categories = Category::all();
-        return view('admin.blog.edit', compact('blog', 'categories'));
+        return view('blog.edit', compact('blog', 'categories'));
     }
 
     /**
@@ -100,9 +106,12 @@ class BlogController extends Controller
         ]);
     
         $blog = Blog::findOrFail($id);
-        
+        // Generate slug from title
+         $slug = Str::slug($request->title);
+         
         $data = $request->except('cover_image');
-    
+        $data['slug'] = $slug; // Add the generated slug to the data
+
         if ($request->hasFile('cover_image')) {
             // Delete old image
             if ($blog->cover_image) {

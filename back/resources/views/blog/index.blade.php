@@ -7,14 +7,14 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-        @include('admin.common.menu')
+        @include('common.menu')
         
         <!-- / Menu -->
 
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->
-          @include('admin.common.navbar')
+          @include('common.navbar')
 
           <!-- / Navbar -->
 
@@ -60,18 +60,90 @@
                       @else
                       @foreach ($blogs as $blog)
                       <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $blog->title }}</strong></td>
+                      <td>
+    @php
+        $fullTitle = $blog->title; // Get the full title
+        $shortTitle = implode(' ', array_slice(explode(' ', $fullTitle), 0, 10)); // Get the first 30 words
+    @endphp
+
+    <span class="category-title" data-bs-toggle="modal" data-bs-target="#categoryModal{{ $blog->id }}">
+        {{ $shortTitle }}{{ strlen($fullTitle) > strlen($shortTitle) ? '...' : '' }} <!-- Add ellipsis if the title is longer -->
+    </span>
+
+    <!-- Modal -->
+    <div class="modal fade" id="categoryModal{{ $blog->id }}" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="categoryModalLabel">Full Category Title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p style="text-wrap: wrap;">{{ $fullTitle }}</p> <!-- Show the full title -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</td>
                         <td>{{ $blog->category->title }}</td>
                         <td>
-                            @foreach (explode(',', $blog->keywords) as $keyword)
-                                <span class="badge bg-primary me-1 mb-1">{{ $keyword }}</span>
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach (explode(',', $blog->tags) as $tag)
-                                <span class="badge bg-secondary me-1 mb-1">{{ $tag }}</span>
-                            @endforeach
-                        </td>
+    <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#keywordsModal{{ $blog->id }}">
+        View Keywords
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="keywordsModal{{ $blog->id }}" tabindex="-1" aria-labelledby="tagsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="keywordsModalLabel">Keywords </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        @foreach (explode(',', $blog->keywords) as $keyword)
+                            <li>{{ $keyword }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</td>
+
+<td>
+    <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#tagsModal{{ $blog->id }}">
+        View Tags
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="tagsModal{{ $blog->id }}" tabindex="-1" aria-labelledby="tagsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tagsModalLabel">Tags </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        @foreach (explode(',', $blog->tags) as $tag)
+                            <li>{{ $tag }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</td>
                         <td>
                           <img src="{{ asset('storage/' . $blog->cover_image_resized) }}" alt="{{ $blog->title }}" style="width: 100px; height: auto;">
                         </td>

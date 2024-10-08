@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import shape1 from '/public/images/shapes/shape_space_4.svg'
 import shape2 from '/public/images/shapes/shape_angle_3-1.webp'
+import { fetchFaqs } from '../../api/faqs'; // Import the fetch function
 
 import {
     Accordion,
@@ -12,13 +13,46 @@ import {
 import Image from 'next/image';
 
 const FaqSection = (props) => {
+    const [faqs, setFaqs] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [open, setOpen] = useState('1'); // State for managing open accordion item
 
-    const [open, setOpen] = useState('1');
+    useEffect(() => {
+        const getFaqs = async () => {
+            const cachedData = localStorage.getItem('faqs');
+            const cachedVersion = localStorage.getItem('faqsVersion');
+            let faqsData = cachedData ? JSON.parse(cachedData) : [];
+            let currentVersion = cachedVersion ? parseInt(cachedVersion) : 0;
+
+            try {
+                const { data, version } = await fetchFaqs();
+                if (version > currentVersion) {
+                    setFaqs(data); // Update state with new data
+                    localStorage.setItem('faqs', JSON.stringify(data)); // Update local storage
+                    localStorage.setItem('faqsVersion', version); // Update version in local storage
+                } else {
+                    setFaqs(faqsData); // Use cached data
+                }
+            } catch (err) {
+                setError(err); // Handle any errors
+            } finally {
+                setLoading(false); // Set loading to false
+            }
+        };
+
+        getFaqs();
+    }, []);
+     
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error fetching Faqs: {error.message}</div>;
+
+
     const toggle = (id) => {
         if (open === id) {
-            setOpen();
+            setOpen(null); // Set to null or an empty string to close the accordion
         } else {
-            setOpen(id);
+            setOpen(id); // Set to the id of the clicked item
         }
     };
 
@@ -36,439 +70,26 @@ const FaqSection = (props) => {
 
                 <div className="faq_accordion accordion" id="faq_accordion">
                     <Accordion open={open} toggle={toggle} className="accordion" id="service_process_faq">
-                        <AccordionItem className="accordion-item">
-                            <AccordionHeader targetId="1">
-                                Q. How to choose a software development company?
+                    {faqs.map((faq, index) => (
+                        <AccordionItem className="accordion-item" key={index + 1}>
+                            <AccordionHeader targetId={String(index + 1)} >
+                                Q. {faq.question}
                             </AccordionHeader>
-                            <AccordionBody accordionId="1" className='acc_body'>
+                            <AccordionBody accordionId={String(index + 1)} className='acc_body'>
                                 <div className="text_a">A.</div>
-                                <p>
-                                    A custom software development company is a vendor that builds unique software from scratch. Also, such vendors provide a range of other useful services like software upgrades,Here is an extended list of services:
-                                </p>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <ul className="icon_list unordered_list_block">
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Web and mobile app development
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Software architecture
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    IT consulting and audit
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Legacy system modernization
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <ul className="icon_list unordered_list_block">
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Cloud computing
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    QA and testing
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Business analysis
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    IT staffing services
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                <p dangerouslySetInnerHTML={{ __html: faq.answer }} />
                             </AccordionBody>
                         </AccordionItem>
-                        <AccordionItem className="accordion-item">
-                            <AccordionHeader targetId="2">
-                                Q. What is a custom software development company?
-                            </AccordionHeader>
-                            <AccordionBody accordionId="2" className='acc_body'>
-                                <div className="text_a">A.</div>
-                                <p>
-                                    A custom software development company is a vendor that builds unique software from scratch. Also, such vendors provide a range of other useful services like software upgrades,Here is an extended list of services:
-                                </p>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <ul className="icon_list unordered_list_block">
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Web and mobile app development
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Software architecture
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    IT consulting and audit
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Legacy system modernization
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <ul className="icon_list unordered_list_block">
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Cloud computing
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    QA and testing
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Business analysis
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    IT staffing services
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </AccordionBody>
-                        </AccordionItem>
-                        <AccordionItem className="accordion-item">
-                            <AccordionHeader targetId="3">
-                                Q. Why do businesses need custom software development?
-                            </AccordionHeader>
-                            <AccordionBody accordionId="3" className='acc_body'>
-                                <div className="text_a">A.</div>
-                                <p>
-                                    A custom software development company is a vendor that builds unique software from scratch. Also, such vendors provide a range of other useful services like software upgrades,Here is an extended list of services:
-                                </p>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <ul className="icon_list unordered_list_block">
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Web and mobile app development
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Software architecture
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    IT consulting and audit
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Legacy system modernization
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <ul className="icon_list unordered_list_block">
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Cloud computing
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    QA and testing
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Business analysis
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    IT staffing services
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </AccordionBody>
-                        </AccordionItem>
-                        <AccordionItem className="accordion-item">
-                            <AccordionHeader targetId="4">
-                                Q. How much does custom software development cost?
-                            </AccordionHeader>
-                            <AccordionBody accordionId="4" className='acc_body'>
-                                <div className="text_a">A.</div>
-                                <p>
-                                    A custom software development company is a vendor that builds unique software from scratch. Also, such vendors provide a range of other useful services like software upgrades,Here is an extended list of services:
-                                </p>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <ul className="icon_list unordered_list_block">
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Web and mobile app development
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Software architecture
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    IT consulting and audit
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Legacy system modernization
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <ul className="icon_list unordered_list_block">
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Cloud computing
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    QA and testing
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Business analysis
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    IT staffing services
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </AccordionBody>
-                        </AccordionItem>
-                        <AccordionItem className="accordion-item">
-                            <AccordionHeader targetId="5">
-                                Q. Why custom software development is important?
-                            </AccordionHeader>
-                            <AccordionBody accordionId="5" className='acc_body'>
-                                <div className="text_a">A.</div>
-                                <p>
-                                    A custom software development company is a vendor that builds unique software from scratch. Also, such vendors provide a range of other useful services like software upgrades,Here is an extended list of services:
-                                </p>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <ul className="icon_list unordered_list_block">
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Web and mobile app development
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Software architecture
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    IT consulting and audit
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Legacy system modernization
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <ul className="icon_list unordered_list_block">
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Cloud computing
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    QA and testing
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    Business analysis
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span className="icon_list_icon">
-                                                    <i className="fa-solid fa-circle fa-fw"></i>
-                                                </span>
-                                                <span className="icon_list_text">
-                                                    IT staffing services
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </AccordionBody>
-                        </AccordionItem>
+                    ))}
+
                     </Accordion>
                 </div>
             </div>
             <div className="decoration_item shape_image_1">
-                <Image src={shape1} alt="Techco Shape" />
+                <Image src={shape1} alt="Fujtech Shape" />
             </div>
             <div className="decoration_item shape_image_2">
-                <Image src={shape2} alt="Techco Shape Angle" />
+                <Image src={shape2} alt="Fujtech Shape Angle" />
             </div>
         </section>
     )

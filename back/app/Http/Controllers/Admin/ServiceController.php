@@ -14,7 +14,7 @@ class ServiceController extends Controller
     public function index()
     {
         $services = Services::all();
-        return view('admin.services.index', compact('services'));
+        return view('services.index', compact('services'));
     }
 
     /**
@@ -22,7 +22,7 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        return view('admin.services.create');
+        return view('services.create');
     }
 
     /**
@@ -32,8 +32,10 @@ class ServiceController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'icon' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'icon' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'description' => 'required|string',
+            'points' => 'nullable|array', // Validate points as an array
+            'points.*' => 'string', // Validate each point as a string
         ]);
 
         $data = $request->only(['title', 'description']);
@@ -42,7 +44,11 @@ class ServiceController extends Controller
             $path = $request->file('icon')->store('service_icons', 'public');
             $data['icon'] = $path;
         }
-    
+        
+        // Store points as a JSON string or keep it as an array
+         $data['points'] = json_encode($request->input('points', [])); // Convert points array to JSON
+
+
         Services::create($data);
 
         return redirect()->route('services.index')->with('success', 'Service created successfully');
@@ -73,6 +79,7 @@ class ServiceController extends Controller
         'title' => 'required|string|max:255',
         'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'description' => 'required|string',
+       
     ]);
 
     $service = Services::findOrFail($id);

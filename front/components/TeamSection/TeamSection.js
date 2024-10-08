@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Teams from '../../api/team'
+import { fetchTeam } from '../../api/team'
 import Link from 'next/link'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -15,9 +15,45 @@ const TeamSection = (props) => {
 
     const [hydrated, setHydrated] = useState(false);
 
+    const [teams, setTeams] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     useEffect(() => {
         setHydrated(true);
+        const getTeam = async () => {
+            const cachedData = localStorage.getItem('team');
+            const cachedVersion = localStorage.getItem('teamVersion');
+            let counterData = cachedData ? JSON.parse(cachedData) : [];
+            let currentVersion = cachedVersion ? parseInt(cachedVersion) : 0;
+
+            try {
+                const { data, version } = await fetchTeam();
+                if (version > currentVersion) {
+                    setTeams(data); // Update state with new data
+                    localStorage.setItem('team', JSON.stringify(data)); // Update local storage
+                    localStorage.setItem('teamVersion', version); // Update version in local storage
+                } else {
+                    setTeams(counterData); // Use cached data
+                }
+            } catch (err) {
+                setError(err); // Handle any errors
+            } finally {
+                setLoading(false); // Set loading to false
+            }
+        };
+
+        getTeam();
     }, []);
+     
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error fetching counters: {error.message}</div>;
+
+
+    // useEffect(() => {
+    //     setHydrated(true);
+        
+    // }, []);
 
     if (!hydrated) {
         return null;
@@ -27,7 +63,6 @@ const TeamSection = (props) => {
         window.scrollTo(10, 0);
     };
 
-    const displayedTeams = Teams && Teams.length > 0 ? Teams.slice(0, 3) : [];
 
     return (
 
@@ -60,41 +95,28 @@ const TeamSection = (props) => {
                             },
                         }}
                     >
-                        {displayedTeams.map((team) => (
+                        {teams.map((team) => (
                             <SwiperSlide key={team.Id}>
                                 <div className="team_block">
                                     <div className="team_member_image">
-                                        <Link onClick={ClickHandler} className="image_wrap" aria-label="Team Details Button" href={'/team-single/[slug]'} as={`/team-single/${team.slug}`}>
-                                            <Image src={team.tImg} alt="" />
-                                            <i className="fa-solid fa-arrow-up-right"></i>
-                                        </Link>
+                                    <img src={team.tImg} alt="" />
+                                 <i className="fa-solid fa-arrow-up-right"></i>
+                                       
                                     </div>
                                     <div className="team_member_info">
                                         <h3 className="team_member_name">
-                                            <Link onClick={ClickHandler} href={'/team-single/[slug]'} as={`/team-single/${team.slug}`}>{team.name}</Link>
+                                           {team.name}
                                         </h3>
-                                        <h4 className="team_member_designation">{team.title}</h4>
+                                        <h4 className="team_member_designation">{team.designation}</h4>
                                         <ul className="social_icons_block unordered_list justify-content-center">
+                                           
                                             <li>
-                                                <Link onClick={ClickHandler} href={'/team-single/[slug]'} as={`/team-single/${team.slug}`}>
-                                                    <Image src={sImg1} alt="Icon Facebook" />
-                                                </Link>
+                                              <Image src={sImg2} alt="Icon Twitter X" />
                                             </li>
                                             <li>
-                                                <Link onClick={ClickHandler} href={'/team-single/[slug]'} as={`/team-single/${team.slug}`}>
-                                                    <Image src={sImg2} alt="Icon Twitter X" />
-                                                </Link>
+                                               <Image src={sImg3} alt="Icon Linkedin" />
                                             </li>
-                                            <li>
-                                                <Link onClick={ClickHandler} href={'/team-single/[slug]'} as={`/team-single/${team.slug}`}>
-                                                    <Image src={sImg3} alt="Icon Linkedin" />
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link onClick={ClickHandler} href={'/team-single/[slug]'} as={`/team-single/${team.slug}`}>
-                                                    <Image src={sImg4} alt="Icon Instagram" />
-                                                </Link>
-                                            </li>
+                                          
                                         </ul>
                                     </div>
                                 </div>

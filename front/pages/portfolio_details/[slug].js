@@ -50,7 +50,7 @@ const PortfolioSinglePage = (props) => {
                             <li>
                                 <span className="icon_list_text">
                                     <strong className="text-dark text-uppercase">Client:</strong>
-                                    Techco
+                                    Fujtech
                                 </span>
                             </li>
                             <li>

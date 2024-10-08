@@ -1,33 +1,20 @@
-import timg1 from '/public/images/team/team_member_image_1.webp'
-import timg2 from '/public/images/team/team_member_image_2.webp'
-import timg3 from '/public/images/team/team_member_image_3.webp'
-import timg4 from '/public/images/team/team_member_image_4.webp'
-import timg5 from '/public/images/team/team_member_image_5.webp'
+import axios from 'axios';
 
+const API_URL = 'http://localhost:8000/api/team'; // Replace with your Laravel backend URL
 
-const Teams = [
-   {
-      Id: '1',
-      tImg: timg1,
-      name: 'Atticus Sterling',
-      slug: 'Atticus-Sterling',
-      title: 'Systems Engineer',
-   },
-   {
-      Id: '2',
-      tImg: timg2,
-      name: 'Orion Jasper',
-      slug: 'Orion-Jasper',
-      title: 'IT Consultant',
-   },
-   {
-      Id: '3',
-      tImg: timg3,
-      name: 'August Everest',
-      slug: 'August-Everest',
-      title: 'systems engineer',
-   }
-   
-]
-
-export default Teams;
+export const fetchTeam = async () => {
+    try {
+        const response = await axios.get(API_URL, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return {
+            data: response.data.data, // Adjust based on your API response structure
+            version: response.data.version, // Get the version from the response
+        };
+    } catch (error) {
+        console.error('Error fetching team:', error);
+        throw error; // Rethrow the error for further handling
+    }
+};

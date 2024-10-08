@@ -23,19 +23,19 @@ const AboutUsPage = (props) => {
         <Fragment>
             <Header />
             <main className="page_content about-page">
-                <PageTitle pageTitle={'About Us'} pagesub={'More Techco 😃'} pageTop={'About'}/>
+                <PageTitle pageTitle={'About Us'} pagesub={'More Fujtech 😃'} pageTop={'About'}/>
                 <section className="intro_about_section section_space bg-light">
                     <div className="intro_about_content">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-8">
                                     <div className="image_wrap">
-                                        <Image src={aImg} alt="Techco - About " />
+                                        <Image src={aImg} alt="Fujtech - About " />
                                     </div>
                                 </div>
                                 <div className="col-lg-4">
                                     <div className="image_wrap position-relative">
-                                        <Image src={aImg2} alt="Techco - About" />
+                                        <Image src={aImg2} alt="Fujtech - About" />
                                         <button className="video_btn ripple_effect" onClick={() => setOpen(true)}>
                                             <span className="btn_icon">
                                                 <i className="fa-solid fa-play"></i>
@@ -52,7 +52,7 @@ const AboutUsPage = (props) => {
                                 <div className="col-lg-4">
                                     <div className="heading_focus_text">
                                         About
-                                        <span className="badge bg-secondary text-white">Techco 🙂</span>
+                                        <span className="badge bg-secondary text-white">Fujtech 🙂</span>
                                     </div>
                                     <h2 className="heading_text mb-0">
                                         We Provide You Flexible Services
@@ -60,7 +60,7 @@ const AboutUsPage = (props) => {
                                 </div>
                                 <div className="col-lg-6">
                                     <p className="heading_description mb-0">
-                                        At Techco, we pride ourselves on offering dynamic and  IT  to suit your specific requirements. Our flexible approach means we can  adjust our offerings to accommodate your evolving needs, whether you require comprehensive IT infrastructure support, strategic consultancy, software development
+                                        At Fujtech, we pride ourselves on offering dynamic and  IT  to suit your specific requirements. Our flexible approach means we can  adjust our offerings to accommodate your evolving needs, whether you require comprehensive IT infrastructure support, strategic consultancy, software development
                                     </p>
                                 </div>
                             </div>

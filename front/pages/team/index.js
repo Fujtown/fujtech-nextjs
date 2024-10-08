@@ -39,10 +39,10 @@ const TeamPage = (props) => {
                                             <span className="badge bg-secondary text-white">Team 🙂</span>
                                         </div>
                                         <h2 className="heading_text">
-                                            Get to Know Our Expert Techco Team
+                                            Get to Know Our Expert Fujtech Team
                                         </h2>
                                         <p className="heading_description mb-0">
-                                            Get acquainted with the powerhouse behind Techco – our expert team of professionals dedicated to revolutionizing the IT landscape. Comprising.
+                                            Get acquainted with the powerhouse behind Fujtech – our expert team of professionals dedicated to revolutionizing the IT landscape. Comprising.
                                         </p>
                                     </div>
                                     <Link onClick={ClickHandler} href={'/team'} className="btn">

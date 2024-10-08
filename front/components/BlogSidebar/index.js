@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link'
-import Services from '../../api/service';
 import icon from '/public/images/icons/icon_search.svg';
 import icon1 from '/public/images/icons/icon_calendar.svg'
 import Image from 'next/image';
 
 const BlogSidebar = (props) => {
 
+    const [services, setServices] = useState([]); // Initialize as an empty array
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const getServices = async () => {
+            const cachedData = localStorage.getItem('services');
+            try {
+                // Parse the cached data if it exists
+                const parsedData = cachedData ? JSON.parse(cachedData) : [];
+                setServices(parsedData); // Use cached data or an empty array if no data
+            } catch (err) {
+                setError(err); // Handle any errors
+            } finally {
+                setLoading(false); // Set loading to false
+            }
+        };
+
+        getServices();
+    }, []);
+
+    if (loading) return <div>Loading...</div>; // Show loading state
+    if (error) return <div>Error fetching services: {error.message}</div>; // Show error message
+
+    
     const ClickHandler = () => {
         window.scrollTo(10, 0);
     }
@@ -29,7 +53,7 @@ const BlogSidebar = (props) => {
                 <div className="post_category_wrap">
                     <h3 className="sidebar_widget_title">Categories</h3>
                     <ul className="post_category_list unordered_list_block">
-                        {Services.slice(0, 6).map((service, srv) => (
+                        {services.slice(0, 4).map((service, srv) => (
                             <li key={srv}>
                                 <Link onClick={ClickHandler} href={'/service-single/[slug]'} as={`/service-single/${service.slug}`}>
                                     <i className="fa-solid fa-arrow-up-right"></i>

@@ -19,7 +19,12 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.HOSTINGER_SSH_KEY }}
 
-    # Step 2: Deploy Laravel (Back)
+    # Step 2: Add Hostinger VPS to known_hosts
+    - name: Add Hostinger VPS to known_hosts
+      run: |
+        ssh-keyscan -H 82.180.154.206 >> ~/.ssh/known_hosts
+
+    # Step 3: Deploy Laravel (Back)
     - name: Copy Laravel files (back)
       run: |
         scp -r ./back/* root@82.180.154.206:/var/www/fujtek.com/html/back/
@@ -28,7 +33,7 @@ jobs:
       run: |
         ssh root@82.180.154.206 "cd /var/www/fujtek.com/html/back && composer install --no-dev --optimize-autoloader && php artisan migrate --force"
 
-    # Step 3: Deploy Next.js (Front)
+    # Step 4: Deploy Next.js (Front)
     - name: Copy Next.js files (front)
       run: |
         scp -r ./front/* root@82.180.154.206:/var/www/fujtek.com/html/front/
@@ -37,8 +42,7 @@ jobs:
       run: |
         ssh root@82.180.154.206 "cd /var/www/fujtek.com/html/front && npm install && npm run build"
 
-    # Step 4: Restart services if needed (Optional)
-    # You can restart any required services here (for example, Nginx or PM2 for Next.js)
-    - name: Restart Services
+    # Step 5: Restart Nginx
+    - name: Restart Nginx
       run: |
-        ssh root@82.180.154.206 "sudo systemctl restart nginx"  # Restart Nginx if required
+        ssh root@82.180.154.206 "sudo systemctl restart nginx"

@@ -89,7 +89,7 @@ const menus = [
             {
                 id: 52,
                 title: 'Portfolio Details',
-                link: '/portfolio_details/Explore-Our-IT-Solutions'
+                link: '/porfolio'
             }
         ]
     },

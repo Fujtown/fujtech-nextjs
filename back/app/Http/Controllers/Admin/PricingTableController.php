@@ -14,7 +14,7 @@ class PricingTableController extends Controller
     public function index()
     {
         $pricingTable = PricingTable::all();
-        return view('admin.extra.pricing-table.show', compact('pricingTable'));
+        return view('extra.pricing-table.show', compact('pricingTable'));
     }
 
     /**
@@ -22,7 +22,7 @@ class PricingTableController extends Controller
      */
     public function create()
     {
-        return view('admin.extra.pricing-table.index');
+        return view('extra.pricing-table.index');
     }
 
     /**
@@ -79,7 +79,7 @@ class PricingTableController extends Controller
     public function edit(string $id)
     {
         $pricingTable = PricingTable::find($id);
-        return view('admin.extra.pricing-table.edit', compact('pricingTable'));
+        return view('extra.pricing-table.edit', compact('pricingTable'));
     }
 
     /**

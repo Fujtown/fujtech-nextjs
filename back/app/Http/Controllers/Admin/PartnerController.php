@@ -14,7 +14,7 @@ class PartnerController extends Controller
     public function index()
     {
         $partners = Partner::all();
-        return view('admin.partners.index', compact('partners'));
+        return view('partners.index', compact('partners'));
     }
 
     /**
@@ -22,7 +22,7 @@ class PartnerController extends Controller
      */
     public function create()
     {
-        return view('admin.partners.create');
+        return view('partners.create');
     }
 
     /**

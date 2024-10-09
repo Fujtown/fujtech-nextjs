@@ -42,7 +42,12 @@ jobs:
       run: |
         ssh root@82.180.154.206 "cd /var/www/fujtek.com/html/front && npm install && npm run build"
 
-    # Step 5: Restart Nginx
+    # Step 5: Restart Next.js App using PM2
+    - name: Restart Next.js app with PM2
+      run: |
+        ssh root@82.180.154.206 "cd /var/www/fujtek.com/html/front && pm2 restart nextjs-app"
+
+    # Step 6: Restart Nginx
     - name: Restart Nginx
       run: |
         ssh root@82.180.154.206 "sudo systemctl restart nginx"

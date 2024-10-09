@@ -15,7 +15,7 @@ class AboutController extends Controller
     {
         $about = About::first();
         
-        return view('admin.extra.about.index', compact('about'));
+        return view('extra.about.index', compact('about'));
     }
 
     /**

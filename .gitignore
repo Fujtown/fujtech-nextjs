@@ -22,7 +22,6 @@ composer.phar
 back/vendor/
 back/node_modules/
 back/public/hot
-back/public/storage
 back/storage/*.key
 back/.env
 back/Homestead.yaml

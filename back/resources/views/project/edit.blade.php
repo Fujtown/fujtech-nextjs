@@ -9,14 +9,14 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-        @include('admin.common.menu')
+        @include('common.menu')
         
         <!-- / Menu -->
 
         <!-- Layout container -->
         <div class="layout-page">
           <!-- Navbar -->
-          @include('admin.common.navbar')
+          @include('common.navbar')
 
           <!-- / Navbar -->
 

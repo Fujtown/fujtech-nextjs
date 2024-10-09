@@ -16,11 +16,9 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\HomeController;
 
-Route::get('/blog-details/{title}', function ($title) {
-    return view('blog-details', ['title' => $title]);
-});
-Route::get('/', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+
+Route::get('/', [AdminAuthController::class, 'showLoginForm'])->name('admin.login')->middleware('guest');
+Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login')->middleware('guest');
 Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
 
 // All admin routes protected by custom middleware

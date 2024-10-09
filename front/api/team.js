@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/api/team'; // Replace with your Laravel backend URL
-
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/team`;
 export const fetchTeam = async () => {
     try {
         const response = await axios.get(API_URL, {

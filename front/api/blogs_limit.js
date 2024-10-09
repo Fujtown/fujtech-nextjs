@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/api/blogs_limit'; // Replace with your Laravel backend URL
-
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/blogs_limit`;
 export const fetchBlogsByLimit = async () => {
     try {
         const response = await axios.get(API_URL, {

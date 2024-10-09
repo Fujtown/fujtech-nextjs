@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/api/blogs'; // Replace with your Laravel backend URL
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/blogs`;
 
 export const fetchBlogs = async () => {
     try {

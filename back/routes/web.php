@@ -15,24 +15,13 @@ use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\HomeController;
-Route::get('/', [HomeController::class, 'index']);
-Route::get('/about', [AboutController::class, 'index']);
-Route::get('/contact', function () {
-    return view('contact');
-});
-Route::get('/services', function () {
-    return view('services');
-});
-Route::get('/blogs', function () {
-    return view('blog');
-});
 
 Route::get('/blog-details/{title}', function ($title) {
     return view('blog-details', ['title' => $title]);
 });
 
-Route::post('/subscribe', [HomeController::class, 'subscribe'])->name('subscribe');
 // Admin login routes (not protected)
+Route::get('/', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
 Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
 

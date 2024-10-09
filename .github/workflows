@@ -1,0 +1,44 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Step 1: Set up SSH
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.HOSTINGER_SSH_KEY }}
+
+    # Step 2: Deploy Laravel (Back)
+    - name: Copy Laravel files (back)
+      run: |
+        scp -r ./back/* root@82.180.154.206:/var/www/fujtek.com/html/back/
+
+    - name: Install Composer dependencies and migrate (Laravel back)
+      run: |
+        ssh root@82.180.154.206 "cd /var/www/fujtek.com/html/back && composer install --no-dev --optimize-autoloader && php artisan migrate --force"
+
+    # Step 3: Deploy Next.js (Front)
+    - name: Copy Next.js files (front)
+      run: |
+        scp -r ./front/* root@82.180.154.206:/var/www/fujtek.com/html/front/
+
+    - name: Install Node.js dependencies and build (Next.js front)
+      run: |
+        ssh root@82.180.154.206 "cd /var/www/fujtek.com/html/front && npm install && npm run build"
+
+    # Step 4: Restart services if needed (Optional)
+    # You can restart any required services here (for example, Nginx or PM2 for Next.js)
+    - name: Restart Services
+      run: |
+        ssh root@82.180.154.206 "sudo systemctl restart nginx"  # Restart Nginx if required

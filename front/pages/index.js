@@ -11,7 +11,7 @@ import ServiceSection from '../components/ServiceSection/ServiceSection';
 import Footer from '../components/Footer/Footer';
 import Scrollbar from '../components/scrollbar/scrollbar';
 
-
+//Remove Service-single and team-single pages
 const HomePage = () => {
 
     return (

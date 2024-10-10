@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
+use App\Models\Category;
 use App\Models\Counter;
 use App\Models\FAQ;
 use App\Models\Partner;
@@ -243,6 +244,23 @@ class APIController extends Controller
        'data' => $projectsWithFullImageUrl,
        'version' => $version,
    ]);
+
+    }
+
+    public function getCategories()
+    {
+        // Fetch partners from the database
+        $faqs = Category::select('id','title')->get();
+       
+          // Get the latest updated_at timestamp to create a dynamic version
+    $latestUpdate = $faqs->max('updated_at'); // Get the latest updated_at timestamp
+    $version = $latestUpdate ? strtotime($latestUpdate) : time(); // Convert to timestamp or use current time if no updates
+
+    // Return the services and version as a structured response
+    return response()->json([
+        'data' => $faqs,
+        'version' => $version,
+    ]);
 
     }
     

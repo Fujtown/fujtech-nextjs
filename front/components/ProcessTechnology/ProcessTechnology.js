@@ -51,7 +51,7 @@ const FaqSection = (props) => {
                                 </AccordionHeader>
                                 <AccordionBody accordionId="1" className='acc_body'>
                                     <p className="m-0">
-                                        Data - driven diagnostic and predictive app for improving  outcomes Data driven diagnostic and predictive app for improving.
+                                    This initial phase involves understanding the client's needs and gathering requirements. It includes research and analysis to identify the problems that need to be solved and the goals that need to be achieved. The focus is on data-driven diagnostics to inform the development process.
                                     </p>
                                 </AccordionBody>
                             </AccordionItem>
@@ -61,7 +61,7 @@ const FaqSection = (props) => {
                                 </AccordionHeader>
                                 <AccordionBody accordionId="2" className='acc_body'>
                                     <p className="m-0">
-                                        Data - driven diagnostic and predictive app for improving  outcomes Data driven diagnostic and predictive app for improving.
+                                    In this phase, the actual design and development of the application take place. This includes creating wireframes, user interfaces, and the overall architecture of the application. The development team works on coding the application based on the requirements gathered during the discovery phase.
                                     </p>
                                 </AccordionBody>
                             </AccordionItem>
@@ -71,7 +71,7 @@ const FaqSection = (props) => {
                                 </AccordionHeader>
                                 <AccordionBody accordionId="3" className='acc_body'>
                                     <p className="m-0">
-                                        Data - driven diagnostic and predictive app for improving  outcomes Data driven diagnostic and predictive app for improving.
+                                    After the application is deployed, ongoing maintenance is crucial to ensure that it continues to function correctly and efficiently. This phase involves fixing bugs, updating software, and making improvements based on user feedback and changing requirements.
                                     </p>
                                 </AccordionBody>
                             </AccordionItem>
@@ -81,7 +81,7 @@ const FaqSection = (props) => {
                                 </AccordionHeader>
                                 <AccordionBody accordionId="4" className='acc_body'>
                                     <p className="m-0">
-                                        Data - driven diagnostic and predictive app for improving  outcomes Data driven diagnostic and predictive app for improving.
+                                    This step involves launching the application to the production environment where it becomes accessible to users. It includes final testing, configuration, and ensuring that all components are working as intended before going live.
                                     </p>
                                 </AccordionBody>
                             </AccordionItem>
@@ -91,7 +91,7 @@ const FaqSection = (props) => {
                                 </AccordionHeader>
                                 <AccordionBody accordionId="5" className='acc_body'>
                                     <p className="m-0">
-                                        Data - driven diagnostic and predictive app for improving  outcomes Data driven diagnostic and predictive app for improving.
+                                    Quality Assurance (QA) is a critical phase where the application is rigorously tested to identify any issues or bugs. This includes functional testing, performance testing, and user acceptance testing to ensure that the application meets the required standards and is ready for deployment.
                                     </p>
                                 </AccordionBody>
                             </AccordionItem>

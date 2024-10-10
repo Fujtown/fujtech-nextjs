@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/team`;
+const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/team`;
 export const fetchTeam = async () => {
     try {
         const response = await axios.get(API_URL, {

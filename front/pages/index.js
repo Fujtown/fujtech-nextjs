@@ -23,12 +23,10 @@ const HomePage = () => {
                     <FeaturePartners />
                     <ServiceSection />
                     <About />
-                    <ProcessTechnology />
+                  <ProcessTechnology /> 
                     <FaqSection />
                     <BlogSection />
                     <ContactSection />
-                    {/* 
-                    <CtaSection /> */}
                 </main>
                 <Footer />
                 <Scrollbar />

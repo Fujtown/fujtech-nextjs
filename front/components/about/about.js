@@ -106,7 +106,7 @@ const About = (props) => {
           </div>
 
           <div className="case_studies_wrapper">
-            {Project.slice(6, 9).map((project, prj) => (
+            {Project.slice(0, 3).map((project, prj) => (
               <div className="case_study_block" key={prj}>
                 <div className="case_study_image">
                   <Image src={project.pImg} alt="Fujtech - Cases" />
@@ -141,25 +141,13 @@ const About = (props) => {
                       <Image src={project.Technologies2} alt="Elephent" />
                     </li>
                   </ul>
-                  <Link onClick={ClickHandler} href={''}  className="btn btn-primary">
-                    <span className="btn_label" data-text="Read Case">Read Case</span>
-                    <span className="btn_icon">
-                      <i className="fa-solid fa-arrow-up-right"></i>
-                    </span>
-                  </Link>
+                
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="btns_group pb-0">
-            <Link onClick={ClickHandler} href="/portfolio" className="btn btn-primary">
-              <span className="btn_label" data-text="View More Cases Study">View More Cases Study</span>
-              <span className="btn_icon">
-                <i className="fa-solid fa-arrow-up-right"></i>
-              </span>
-            </Link>
-          </div>
+         
         </div>
       </div>
       <div className="decoration_item shape_image_1">

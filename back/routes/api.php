@@ -23,3 +23,4 @@ Route::get('/blogs/{slug}', [APIController::class, 'getBlogBySlug']); // Add thi
 
 // Define a route for fetching projects
 Route::get('/projects', [APIController::class, 'getProjects']);
+Route::get('/categories', [APIController::class, 'getCategories']);

@@ -8,6 +8,7 @@ import cnIcon3 from '/public/images/case/icon_elephent.svg'
 import cnIcon4 from '/public/images/icons/icon_swift.svg'
 import cnIcon5 from '/public/images/icons/icon_typescript.svg'
 import cnIcon6 from '/public/images/icons/icon_python.svg'
+import cnIcon7 from '/public/images/icons/ci-cd.png'
 import cnIcon11 from '/public/images/icons/icon_react_js.svg'
 import cnIcon12 from '/public/images/icons/icon_laravel.svg'
 import cnIcon13 from '/public/images/icons/aws.svg'
@@ -27,6 +28,7 @@ const TechnologyList = [
     { Id: '3', sIcon: cnIcon4, title: 'Swift', type: 'Mobile' },
     { Id: '4', sIcon: cnIcon5, title: 'Typescript', type: 'Frontend' },
     { Id: '5', sIcon: cnIcon6, title: 'Python', type: 'Backend' },
+    { Id: '6', sIcon: cnIcon7, title: 'DevOps', type: 'Backend' },
     { Id: '11', sIcon: cnIcon11, title: 'React Js', type: 'Frontend' },
     { Id: '12', sIcon: cnIcon12, title: 'Laravel', type: 'Backend' },
     { Id: '13', sIcon: cnIcon13, title: 'AWS', type: 'Cloud' },

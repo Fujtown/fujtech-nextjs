@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/counters`; // Correctly concatenate the base URL with the endpoint
+const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/counters`; // Correctly concatenate the base URL with the endpoint
  // Replace with your Laravel backend URL
 
 export const fetchCounters = async () => {

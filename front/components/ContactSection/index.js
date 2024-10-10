@@ -47,7 +47,7 @@ const ContactSection = (props) => {
                                         <span className="text"><span><strong>U.A.E</strong></span><br/>
                                         <span><strong>Dubai Branch</strong></span><br/>
                                                     <span>Dubai Media City </span><br/>
-                                                    <span>----------------------------</span><br/>
+                                                    <span>--------------------------</span><br/>
                                                 <span><strong>Fujtek Head Office</strong></span><br/>
                                                 Office 808, Creative City Tower
                                                 Fujairah, UAE

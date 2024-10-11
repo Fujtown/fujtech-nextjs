@@ -105,10 +105,11 @@ const BlogList = (props) => {
                                     currentBlogs.map((blog, Bitem) => (
                                         <div className="col-lg-6" key={Bitem}>
                                             <div className={styles.blogCard}>
-                                                <div className={styles.blogImage}>
-                                                    <Link href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`} className={styles.imageWrap}>
-                                                        <Image style={{ objectFit: 'cover' }} layout="fill" src={blog.bImg} alt="Blog Post" />
-                                                    </Link>
+                    <div className={styles.blogImage} style={{ backgroundImage: `url(${blog.bImg})`, objectFit: 'cover', height: '210px', width: '100%',backgroundPosition:'center',backgroundSize:'cover' }}>
+
+                                                    {/* <Link href={'/blog-single/[slug]'} as={`/blog-single/${blog.slug}`} className={styles.imageWrap}> */}
+                                                    {/* <img src={blog.bImg} alt="Blog Post" className={styles.blogImageChild} /> */}
+                                                    {/* </Link> */}
                                                 </div>
                                                 <div className={styles.blogContent}>
                                                     <h3>

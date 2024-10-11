@@ -19,7 +19,7 @@ const CtaSection = (props) => {
                     </p>
                 </div>
                 <Link onClick={ClickHandler} href="/contact" className="btn btn-primary">
-                    <span className="btn_label" data-text="Contact Us Today!">Contact Us Today!</span>
+                    <span className="btn_label">Contact Us Today!</span>
                     <span className="btn_icon">
                         <i className="fa-solid fa-arrow-up-right"></i>
                     </span>

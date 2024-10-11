@@ -109,3 +109,9 @@
     margin-top: 10px; /* Space above the button */
     border-radius: 5px; /* Rounded corners */
 }
+
+.blogImageChild {
+    object-fit: cover;
+    height: 200px;
+    width: 100%;
+}

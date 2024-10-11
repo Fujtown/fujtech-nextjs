@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Counter;
 use App\Models\FAQ;
+use App\Models\Message;
 use App\Models\Partner;
 use App\Models\Project;
 use App\Models\Services;
@@ -262,6 +263,24 @@ class APIController extends Controller
         'version' => $version,
     ]);
 
+    }
+
+    public function storeMessage(Request $request)
+    {
+        // Validate the request
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'company' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'message' => 'required|string',
+        ]);
+
+        // Store the message in the database
+        $message = Message::create($validatedData);
+
+        // Return a response
+        return response()->json(['message' => 'Message saved successfully!', 'data' => $message], 201);
     }
     
     /**

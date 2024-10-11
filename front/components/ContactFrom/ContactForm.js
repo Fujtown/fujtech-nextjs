@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import axios from 'axios';
 import SimpleReactValidator from 'simple-react-validator';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const ContactForm = (props) => {
 
     const [forms, setForms] = useState({
@@ -26,13 +28,27 @@ const ContactForm = (props) => {
         e.preventDefault();
         if (validator.allValid()) {
             validator.hideMessages();
-            setForms({
-                name: '',
-                email: '',
-                company: '',
-                phone: '',
-                message: ''
-            })
+            const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/message`;
+            // Make the API request
+            axios.post(API_URL, forms)
+                .then(response => {
+                    // Handle success (you can show a success message or do something else)
+                    console.log('Message saved successfully:', response.data);
+                    toast.success('Message Send successfully!');
+                    // Clear the form after success
+                    setForms({
+                        name: '',
+                        email: '',
+                        company: '',
+                        phone: '',
+                        message: ''
+                    });
+                })
+                .catch(error => {
+                    // Handle error (display error message or perform some other action)
+                    console.error('There was an error saving the message:', error);
+                    toast.error('There was an error saving the message.');
+                });
         } else {
             validator.showMessages();
         }
@@ -40,7 +56,7 @@ const ContactForm = (props) => {
 
     return (
 
-
+        <div>
         <form className="xb-item--form contact-from" onSubmit={(e) => submitHandler(e)}>
             <div className="row">
                 <div className="col-md-6">
@@ -124,7 +140,7 @@ const ContactForm = (props) => {
                         {validator.message('message', forms.message, 'required')}
                     </div>
                     <button type="submit" className="btn btn-primary">
-                        <span className="btn_label" data-text="Send Request">Send Request</span>
+                        <span className="btn_label">Send Request</span>
                         <span className="btn_icon">
                             <i className="fa-solid fa-arrow-up-right"></i>
                         </span>
@@ -132,6 +148,9 @@ const ContactForm = (props) => {
                 </div>
             </div>
         </form>
+
+          <ToastContainer />
+          </div>
     )
 }
 

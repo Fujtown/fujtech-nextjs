@@ -180,15 +180,9 @@ const Footer = (props) => {
                       </span>
                     </Link>
                   </li>
+                  
                   <li>
-                    <Link onClick={ClickHandler} href="/contact">
-                      <span className="icon_list_text">
-                        Our locations
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link onClick={ClickHandler} href="/portfolio">
+                    <Link onClick={ClickHandler} href="/career">
                       <span className="icon_list_text">
                         Careers
                       </span>
@@ -198,6 +192,13 @@ const Footer = (props) => {
                     <Link onClick={ClickHandler} href="/contact">
                       <span className="icon_list_text">
                         Contacts
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link onClick={ClickHandler} href="/sitemap.xml">
+                      <span className="icon_list_text">
+                        Site Map
                       </span>
                     </Link>
                   </li>
@@ -246,62 +247,14 @@ const Footer = (props) => {
                   <li>
                     <Link onClick={ClickHandler} href="/home_software_company">
                       <span className="icon_list_text">
-                        Data science
+                        Web Industry
                       </span>
                     </Link>
                   </li>
                 </ul>
               </div>
             </div>
-            <div className="col-lg-2 col-md-6">
-              <div className="footer_widget">
-                <h3 className="footer_info_title">Industries</h3>
-                <ul className="icon_list unordered_list_block">
-                  <li>
-                    <Link onClick={ClickHandler} href="/contact">
-                      <span className="icon_list_text">
-                        Insurance
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link onClick={ClickHandler} href="/home_software_company">
-                      <span className="icon_list_text">
-                        Banking
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link onClick={ClickHandler} href="/service">
-                      <span className="icon_list_text">
-                        Fintech
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link onClick={ClickHandler} href="/home_software_company">
-                      <span className="icon_list_text">
-                        Logistics
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link onClick={ClickHandler} href="/service">
-                      <span className="icon_list_text">
-                        Retail
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link onClick={ClickHandler} href="/portfolio">
-                      <span className="icon_list_text">
-                        Healthcare
-                      </span>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
+          
             <div className="col-lg-4 col-md-6">
               <div className="footer_widget pe-lg-3">
                 <h2 className="footer_info_title">Newsletter</h2>

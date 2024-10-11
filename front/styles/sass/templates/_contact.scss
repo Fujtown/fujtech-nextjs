@@ -190,5 +190,11 @@
 .bg-secondary{
 	background-color: rgb(228 94 54) !important;
 }
+
+.Toastify__toast-container {
+    z-index: 9999 !important;
+	top: 75px !important;
+}
+
 /* 5.02 - Contact Page - End
 ================================================== */

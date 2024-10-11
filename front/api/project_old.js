@@ -1,6 +1,6 @@
 import pImg4 from '/public/images/case/case1.jpg'
 import pImg5 from '/public/images/case/case2.jpg'
-import pImg6 from '/public/images/case/case_image_3.webp'
+import pImg6 from '/public/images/case/case3.jpg'
 
 
 import tImg1 from '/public/images/icons/icon_laravel.svg'
